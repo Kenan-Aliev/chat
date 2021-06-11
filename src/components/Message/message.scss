@@ -1,0 +1,104 @@
+@import '../../styles/variables';
+
+.message {
+  $self: &;
+  display: flex;
+  flex-direction: row;
+  max-width: 440px;
+
+  &__avatar {
+    display: flex;
+    flex-direction: column-reverse;
+
+    img {
+      border-radius: 50px;
+      width: 30px;
+      height: 33px;
+      margin-right: 13px;
+      margin-bottom: 18px;
+    }
+
+  }
+
+  &__attachments{
+    display: flex;
+    &-item{
+      margin-right: 10px;
+      cursor: pointer;
+      img{
+        width: 45px;
+        height: 45px;
+        border-radius:8px ;
+      }
+    }
+  }
+  &__info{
+    display: flex;
+  }
+
+  &--isme {
+    display: flex;
+    flex-direction: row-reverse;
+    max-width: 100%;
+
+    #{$self}__content {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    #{$self}__avatar {
+      img {
+        margin-left: 13px;
+      }
+    }
+
+    #{$self}__info {
+
+    }
+
+
+    #{$self}__bubble {
+      background: #ffffff;
+      border: 1px solid #ececec;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.0220444);
+      border-radius: 12px 12px 0px 12px;
+      order: 2;
+
+      #{$self}__text {
+        color: $black;
+      }
+    }
+  }
+
+  &__icon-readed {
+    position: absolute;
+    bottom: 25px;
+    left: -25px;
+  }
+
+  &__content {
+    display: flex;
+    position: relative;
+  }
+
+  &__bubble {
+    background: $blue;
+    box-shadow: 0 0 5px rgba(54, 116, 255, 0.196733);
+    border-radius: 12px 12px 12px 0px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  &__text {
+    color: #ffffff;
+    line-height: 20px;
+  }
+
+  &__date {
+    font-size: 12px;
+    opacity: 0.4;
+  }
+}

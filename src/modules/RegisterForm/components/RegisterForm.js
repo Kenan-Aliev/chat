@@ -4,11 +4,23 @@ import {Form, Input} from "antd";
 import {Link} from 'react-router-dom'
 import {UserOutlined, LockOutlined, MailOutlined, InfoCircleTwoTone} from '@ant-design/icons';
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
     const success = false
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
     }
+
+    const {
+        values,
+        touched,
+        errors,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isValid,
+        dirty,
+        isSubmitting
+    } = props;
 
     return (
         <section className={'auth'}>
@@ -21,7 +33,7 @@ const RegisterForm = () => {
                     {success ?
                         <div className={'auth__success_block'}>
                             <div>
-                                <InfoCircleTwoTone style={{ fontSize: '50px'}} />
+                                <InfoCircleTwoTone style={{fontSize: '50px'}}/>
                             </div>
                             <h2>Подтвердите свой аккаунт</h2>
                             <p>На вашу почту отправлено письмо с ссылкой на подтверждение аккаунта</p>
@@ -30,23 +42,19 @@ const RegisterForm = () => {
                         <Form
                             name="normal_login"
                             className="login-form"
-                            initialValues={{
-                                remember: true,
-                            }}
                             onFinish={onFinish}
+                            onSubmit={handleSubmit}
                         >
-                            <Form.Item
-                                name="email"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Пожалуйста,введите ваш email',
-                                    },
-                                ]}
+                            <Form.Item validateStatus={!touched.email ? "" : errors.email ? 'error' : 'success'}
+                                       help={touched.email && errors.email && errors.email}
                             >
                                 <Input
                                     prefix={<MailOutlined className="site-form-item-icon"/>}
                                     placeholder="Email"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.email}
+                                    name="email"
                                     size={'large'}/>
                             </Form.Item>
                             <Form.Item
@@ -67,19 +75,18 @@ const RegisterForm = () => {
                             </Form.Item>
 
                             <Form.Item
-                                name="password"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Пожалуйста,введите пароль!',
-                                    },
-                                ]}
+                                validateStatus={!touched.password ? "" : errors.password ? 'error' : 'success'}
+                                help={touched.password && errors.password && errors.password}
                             >
                                 <Input
                                     prefix={<LockOutlined className="site-form-item-icon"/>}
                                     type="password"
+                                    name={'password'}
                                     placeholder="Введите пароль"
                                     size={'large'}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.password}
                                 />
                             </Form.Item>
 
@@ -101,7 +108,8 @@ const RegisterForm = () => {
                             </Form.Item>
 
                             <Form.Item>
-                                <Button type="primary" htmlType="submit" className="login-form-button">
+                                <Button disabled={!isValid || !dirty || isSubmitting} type="primary" onClick={handleSubmit} htmlType="submit"
+                                        className="login-form-button">
                                     Зарегистрироваться
                                 </Button>
                             </Form.Item>
