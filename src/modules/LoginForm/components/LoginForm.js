@@ -2,13 +2,26 @@ import React from 'react';
 import {Block, Button} from "../../../components";
 import {Form, Input} from "antd";
 import {Link} from 'react-router-dom'
-import {UserOutlined, LockOutlined} from '@ant-design/icons';
+import {UserOutlined, LockOutlined, MailOutlined, InfoCircleTwoTone} from '@ant-design/icons';
+import {validateField} from "../../../utils/helpers/index";
 
-const LoginForm = () => {
-
+const RegisterForm = (props) => {
+    const success = false
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
     }
+
+    const {
+        values,
+        touched,
+        errors,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isValid,
+        dirty,
+        isSubmitting
+    } = props;
 
     return (
         <section className={'auth'}>
@@ -21,49 +34,47 @@ const LoginForm = () => {
                     <Form
                         name="normal_login"
                         className="login-form"
-                        initialValues={{
-                            remember: true,
-                        }}
                         onFinish={onFinish}
+                        onSubmit={handleSubmit}
                     >
-                        <Form.Item
-                            name="username"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Username!',
-                                },
-                            ]}
+                        <Form.Item validateStatus={validateField('email', touched, errors)}
+                                   help={touched.email && errors.email && errors.email}
                         >
-                            <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="Username"
-                                   size={'large'}/>
+                            <Input
+                                prefix={<MailOutlined className="site-form-item-icon"/>}
+                                placeholder="E-Mail"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.email}
+                                name="email"
+                                size={'large'}/>
                         </Form.Item>
                         <Form.Item
                             name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Password!',
-                                },
-                            ]}
+                            validateStatus={validateField('password', touched, errors)}
+                            help={touched.password && errors.password && errors.password}
                         >
                             <Input
-                                prefix={<LockOutlined className="site-form-item-icon"/>}
+                                name={'password'}
+                                placeholder="Введите пароль"
                                 type="password"
-                                placeholder="Password"
                                 size={'large'}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.password}
                             />
                         </Form.Item>
 
-
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
+                            <Button disabled={!isValid || !dirty || isSubmitting} type="primary"
+                                    onClick={handleSubmit} htmlType="submit"
+                                    className="login-form-button">
                                 Войти в аккаунт
                             </Button>
                         </Form.Item>
 
 
-                        <Link className={'auth_register_link'} to={'register'}>Зарегистрироваться</Link>
+                        <Link className={'auth_register_link'} to={'/register'}>Зарегистрироваться</Link>
 
                     </Form>
 
@@ -74,4 +85,4 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm;
+export default RegisterForm;

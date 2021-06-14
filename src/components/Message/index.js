@@ -8,15 +8,16 @@ import readedIcon from '../../assets/img/readed.svg'
 import notreaded from '../../assets/img/notreaded.svg'
 
 const Message = (props) => {
-    console.log(props)
     return (
-        <div className={classNames('message', {"message--isme": props.isMe})}>
+        <div className={classNames('message', {
+            "message--isme": props.isMe,
+            'message--isTyping': props.isTyping,
+            'message--image': props.attachments?.length === 1
+        })}>
             <div className="message__content">
-                {props.isMe && props.isReaded ?
-                    <img src={readedIcon} alt="checked icon" className={'message__icon-readed'}/>
-                    :
-                    <img src={notreaded} alt="not checked icon" className={'message__icon-readed'}/>
-                }
+                {props.isMe && (props.isReaded ?
+                    <img src={readedIcon} alt="checked icon" className={'message__icon-readed'}/> :
+                    <img src={notreaded} alt="not checked icon" className={'message__icon-readed'}/>)}
                 <div className="message__avatar">
                     <img
                         src={props.avatar}
@@ -24,18 +25,25 @@ const Message = (props) => {
                 </div>
                 <div className="message__info">
                     <div>
+                        {(props.text || props.isTyping) &&
                         <div className="message__bubble">
-                            <p className={'message__text'}>{props.text}</p>
-                        </div>
+                            {props.text && <p className={'message__text'}>{props.text}</p>}
+                            {props.isTyping &&
+                            <div className="message__typing">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>}
+                        </div>}
                         <div className="message__attachments">
-                            {props.attachments?.length > 0  && props.attachments.map((item) => {
+                            {props.attachments?.length > 0 && props.attachments.map((item) => {
                                 return <div className="message__attachments-item" key={item.url}>
                                     <img src={item.url} alt={item.filename}/>
                                 </div>
                             })}
 
                         </div>
-                        <Moment fromNow locale={'ru'} className={'message__date'}>{props.date}</Moment>
+                        {props.date && <Moment fromNow locale={'ru'} className={'message__date'}>{props.date}</Moment>}
                     </div>
 
                 </div>
@@ -54,7 +62,8 @@ Message.propTypes = {
     text: PropTypes.string,
     date: PropTypes.string,
     user: PropTypes.object,
-    attachments: PropTypes.array
+    attachments: PropTypes.array,
+    isTyping: PropTypes.bool
 }
 
 export default Message;

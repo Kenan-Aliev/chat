@@ -3,6 +3,7 @@ import {Block, Button} from "../../../components";
 import {Form, Input} from "antd";
 import {Link} from 'react-router-dom'
 import {UserOutlined, LockOutlined, MailOutlined, InfoCircleTwoTone} from '@ant-design/icons';
+import {validateField} from "../../../utils/helpers/index";
 
 const RegisterForm = (props) => {
     const success = false
@@ -45,7 +46,7 @@ const RegisterForm = (props) => {
                             onFinish={onFinish}
                             onSubmit={handleSubmit}
                         >
-                            <Form.Item validateStatus={!touched.email ? "" : errors.email ? 'error' : 'success'}
+                            <Form.Item validateStatus={validateField('email', touched, errors)}
                                        help={touched.email && errors.email && errors.email}
                             >
                                 <Input
@@ -58,15 +59,14 @@ const RegisterForm = (props) => {
                                     size={'large'}/>
                             </Form.Item>
                             <Form.Item
-                                name="name"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Пожалуйста,введите ваше имя',
-                                    },
-                                ]}
+                                name="fullname" validateStatus={validateField('fullname', touched, errors)}
+                                help={touched.fullname && errors.fullname && errors.fullname}
                             >
                                 <Input
+                                    name={'fullname'}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.fullname}
                                     prefix={<UserOutlined className="site-form-item-icon"/>}
                                     type="text"
                                     placeholder="Ваше имя"
@@ -75,7 +75,7 @@ const RegisterForm = (props) => {
                             </Form.Item>
 
                             <Form.Item
-                                validateStatus={!touched.password ? "" : errors.password ? 'error' : 'success'}
+                                validateStatus={validateField('password', touched, errors)}
                                 help={touched.password && errors.password && errors.password}
                             >
                                 <Input
@@ -92,14 +92,11 @@ const RegisterForm = (props) => {
 
                             <Form.Item
                                 name="confirmPassword"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Пожалуйста,повторите пароль!',
-                                    },
-                                ]}
+                                validateStatus={validateField('confirmPassword', touched, errors)}
+                                help={touched.confirmPassword && errors.confirmPassword && errors.confirmPassword}
                             >
                                 <Input
+                                    name='confirmPassword'
                                     prefix={<LockOutlined className="site-form-item-icon"/>}
                                     type="password"
                                     placeholder="Повторите пароль"
@@ -108,7 +105,8 @@ const RegisterForm = (props) => {
                             </Form.Item>
 
                             <Form.Item>
-                                <Button disabled={!isValid || !dirty || isSubmitting} type="primary" onClick={handleSubmit} htmlType="submit"
+                                <Button disabled={!isValid || !dirty || isSubmitting} type="primary"
+                                        onClick={handleSubmit} htmlType="submit"
                                         className="login-form-button">
                                     Зарегистрироваться
                                 </Button>
