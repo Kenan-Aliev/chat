@@ -1,10 +1,27 @@
 import React from 'react';
 import './Home.scss'
 import {Message} from "../../components/index";
+import DialogItem from "../../components/DialogItem";
 
 const Home = () => {
     return (
         <div className={'home'}>
+            <div className="dialogs">
+                <DialogItem/>
+            </div>
+            {/*<Dialogs items={[*/}
+            {/*    {*/}
+            {/*        user: {*/}
+            {/*            fullname: "",*/}
+            {/*            avatar: null*/}
+            {/*        },*/}
+            {/*        message:{*/}
+            {/*            text: "Как дела чертила,давно не виделись?)",*/}
+            {/*            isReaded: false,*/}
+            {/*            created_at:new Date()*/}
+            {/*        }*/}
+            {/*    }*/}
+            {/*]}/>*/}
             {/*<Message*/}
             {/*    avatar={'https://sun9-41.userapi.com/impg/uYT1TNjBEPCrfd5UzGXiQtFUlv0FmJS0dgydOg/xxyw8iK0lF4.jpg?size=810x1080&quality=96&sign=94bb5d479c7d31af42c89f2dbbe53ecb&type=album'}*/}
             {/*    text={'Салам, Брут! Че, как, уничтожил флот галлов? '}*/}

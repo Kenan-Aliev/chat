@@ -6,6 +6,7 @@ import 'moment/locale/ru'
 import classNames from 'classnames'
 import readedIcon from '../../assets/img/readed.svg'
 import notreaded from '../../assets/img/notreaded.svg'
+import {StatusIcon, Time} from "../index";
 
 const Message = (props) => {
     return (
@@ -15,9 +16,7 @@ const Message = (props) => {
             'message--image': props.attachments?.length === 1
         })}>
             <div className="message__content">
-                {props.isMe && (props.isReaded ?
-                    <img src={readedIcon} alt="checked icon" className={'message__icon-readed'}/> :
-                    <img src={notreaded} alt="not checked icon" className={'message__icon-readed'}/>)}
+                <StatusIcon isMe={props.isMe} isReaded={props.isReaded}/>
                 <div className="message__avatar">
                     <img
                         src={props.avatar}
@@ -43,7 +42,7 @@ const Message = (props) => {
                             })}
 
                         </div>
-                        {props.date && <Moment fromNow locale={'ru'} className={'message__date'}>{props.date}</Moment>}
+                        {props.date && <Time date={props.date}/>}
                     </div>
 
                 </div>
@@ -63,7 +62,9 @@ Message.propTypes = {
     date: PropTypes.string,
     user: PropTypes.object,
     attachments: PropTypes.array,
-    isTyping: PropTypes.bool
+    isTyping: PropTypes.bool,
+    isMe: PropTypes.bool,
+    isReaded: PropTypes.bool
 }
 
 export default Message;
