@@ -1,12 +1,12 @@
 import React from 'react';
 import classNames from 'classnames'
 import './dialogItem.scss'
-import {Time,StatusIcon} from "../index";
+import {Time, StatusIcon} from "../index";
 
 
 const DialogItem = (props) => {
     return (
-        <div className={'dialogs__item'}>
+        <div className={classNames('dialogs__item', {"dialogs__item-online": props.user.isOnline})}>
             <div className="dialogs__item-avatar">
                 {/*<img src={props.user.avatar} alt={`${props.user.fullname} avatar`}/>*/}
                 <img
@@ -19,9 +19,12 @@ const DialogItem = (props) => {
                     <b>Jack the Ripper</b>
                     <Time date={new Date()}/>
                 </div>
-                <div className="dialogs__item-info-top">
-                    <p>Как дела чертила,давно не виделись?)</p>
-                   <StatusIcon isMe={props.isMe} isReaded={props.isReaded}/>
+                <div className="dialogs__item-info-bottom">
+                    <p>Как дела чертила,давно не виделись?цйаупцкре)</p>
+                    <StatusIcon isMe={true} isReaded={true}/>
+                    {props.unReaded > 0 &&
+                    <div className="dialogs__item-info-bottom-count">{props.unReaded > 9 ? "+9" : props.unReaded}</div>}
+
                 </div>
             </div>
         </div>

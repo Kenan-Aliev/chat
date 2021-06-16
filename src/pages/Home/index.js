@@ -7,7 +7,21 @@ const Home = () => {
     return (
         <div className={'home'}>
             <div className="dialogs">
-                <DialogItem/>
+                <DialogItem user={{
+                    fullname: 'Федор Достоевский',
+                    isOnline: true
+                }}
+                            unReaded={999}/>
+                <DialogItem user={{
+                    fullname: 'Федор Достоевский',
+                    isOnline: false
+                }}
+                            unReaded={0}/>
+                <DialogItem user={{
+                    fullname: 'Федор Достоевский',
+                    isOnline: false
+                }}
+                            unReaded={0}/>
             </div>
             {/*<Dialogs items={[*/}
             {/*    {*/}
